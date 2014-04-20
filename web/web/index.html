@@ -1,0 +1,82 @@
+
+<html>
+    <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+         <meta charset="UTF-8">
+          <h1 id="project_title">Trabalho D</h1>
+          <h2 id="project_tagline">Assinatura digital via JavaScript</h2>
+
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+
+<!-- now editing -->
+<form name="form1">
+<h4>(Passo 1) Gerar par de chaves</h4>
+ECC: 
+<select name="curve1">
+<option value="secp256r1">secp256r1 (= NIST P-256, P-256, prime256v1)
+</option><option value="secp256k1">secp256k1
+</option><option value="secp384r1">secp384r1 (= NIST P-384, P-384)
+</option></select><br>
+<input type="button" value="gerar par de chaves EC" onclick="doGenerate();"><br>
+<p>
+Chave privada (hex): <input type="text" name="prvkey1" value="" size="100"><br>
+Chave pública (hex): <input type="text" name="pubkey1" value="" size="100"><br>
+</p>
+
+<!-- ============================================================== -->
+
+<h4>(Passo 2) Mensagem</h4>
+
+
+
+	<script language="JavaScript">
+	<!--
+	function teste(){
+	if (document.upload.arquivo.value==="") {
+	alert("Arquivo para upload não informado!");
+	document.upload.arquivo.focus();
+	return false;
+	}
+	}
+	//-->
+	</script>
+
+	<h2>Upload
+	</h2>
+<form name="upload" action="upload.php" method="post" enctype="multipart/form-data" onsubmit="return teste()">
+	<input type="file" name="arquivo">
+	<br>
+	<input type="submit" name="enviar" value="Upload!">
+
+<br>
+<br>
+</form>
+Algoritimo de Assinatura: 
+<select name="sigalg1">
+<option value="SHA256withECDSA">SHA256withECDSA
+</option><option value="SHA1withECDSA">SHA1withECDSA
+</option></select><br>
+
+Mensagem a ser assinada: 
+<input type="text" name="msg1" value="" size="100"><br>
+<input type="button" value="sign message" onclick="doSign();"><br>
+<p>
+Valor da Assinatura (hex): <input type="text" name="sigval1" value="" size="100"><br>
+</p>
+
+<h4>(Step3) Verificar Assinatura</h4>
+<input type="button" value="Verificar" onclick="doVerify();">
+<input type="reset" value="reset">
+
+      </section>
+    </div>
+</body>
+</html>
