@@ -1,0 +1,259 @@
+<html><head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="chrome=1">
+        <meta name="description" content="jsrsasign : The 'jsrsasign' (RSA-Sign JavaScript Library) is a open source free pure JavaScript implementation of PKCS#1 v2.1 RSASSA-PKCS1-v1_5 RSA signing and validation algorithm.">
+
+        <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+        <title>Trabalho D</title>
+        <script src="core.js"></script>
+        <style type="text/css">
+
+        </style>
+        <script type="text/javascript" src="cipher-core.js"></script>
+        <script type="text/javascript" src="md5.js"></script>
+        <script type="text/javascript" src="tripledes.js"></script>
+        <script type="text/javascript" src="enc-base64.js"></script>
+        <script type="text/javascript" src="sha1.js"></script>
+        <script type="text/javascript" src="sha256.js"></script>
+        <script type="text/javascript" src="yahoo-min.js"></script>
+        <script type="text/javascript" src="base64x-1.1.min.js"></script>
+        <script type="text/javascript" src="jsbn.js"></script>
+        <script type="text/javascript" src="jsbn2.js"></script>
+        <script type="text/javascript" src="prng4.js"></script>
+        <script type="text/javascript" src="rng.js"></script>
+        <script type="text/javascript" src="rsa.js"></script>
+        <script type="text/javascript" src="rsa2.js"></script>
+        <script type="text/javascript" src="base64.js"></script>
+        <script type="text/javascript" src="asn1hex-1.1.js"></script>
+        <script type="text/javascript" src="rsapem-1.1.js"></script>
+        <script type="text/javascript" src="rsasign-1.2.js"></script>
+        <script type="text/javascript" src="x509-1.1.js"></script>
+        <script type="text/javascript" src="pkcs5pkey-1.0.js"></script>
+        <script type="text/javascript" src="asn1-1.0.js"></script>
+        <script type="text/javascript" src="asn1x509-1.0.js"></script>
+        <script type="text/javascript" src="crypto-1.1.js"></script>
+        <script type="text/javascript" src="ec.js"></script>
+        <script type="text/javascript" src="ec-patch.js"></script>
+        <script type="text/javascript" src="ecdsa-modified-1.0.js"></script>
+        <script type="text/javascript" src="ecparam-1.0.js"></script>
+        <script type="text/javascript">
+    
+    var _pubKey = null;      
+  	var _prvKey = null;      
+  	var _algAss = null;     
+    //var _alg = "RSA";      
+    var _lencurve = 1024;    
+    var _curva = null;
+    var _strHex = null; 
+    
+    
+    
+    var _certificate = "-----BEGIN CERTIFICATE-----"+
++"MIIBvTCCASYCCQD55fNzc0WF7TANBgkqhkiG9w0BAQUFADAjMQswCQYDVQQGEwJK"+
++"UDEUMBIGA1UEChMLMDAtVEVTVC1SU0EwHhcNMTAwNTI4MDIwODUxWhcNMjAwNTI1"+
++"MDIwODUxWjAjMQswCQYDVQQGEwJKUDEUMBIGA1UEChMLMDAtVEVTVC1SU0EwgZ8w"+
++"DQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBANGEYXtfgDRlWUSDn3haY4NVVQiKI9Cz"+
++"Thoua9+DxJuiseyzmBBe7Roh1RPqdvmtOHmEPbJ+kXZYhbozzPRbFGHCJyBfCLzQ"+
++"fVos9/qUQ88u83b0SFA2MGmQWQAlRtLy66EkR4rDRwTj2DzR4EEXgEKpIvo8VBs/"+
++"3+sHLF3ESgAhAgMBAAEwDQYJKoZIhvcNAQEFBQADgYEAEZ6mXFFq3AzfaqWHmCy1"+
++"ARjlauYAa8ZmUFnLm0emg9dkVBJ63aEqARhtok6bDQDzSJxiLpCEF6G4b/Nv/M/M"+
++"LyhP+OoOTmETMegAVQMq71choVJyOFE5BtQa6M/lCHEOya5QUfoRF2HF9EjRF44K"+
++"3OK+u3ivTSj3zwjtpudY5Xo="+
++"-----END CERTIFICATE-----";
+    
+
+  
+  
+  
+  function gera(){
+  	
+  	
+  var ec = KJUR.crypto.ECDSA({'curve': 'secp256r1'});
+  var ec = new KJUR.crypto.ECDSA({"curve": ec});
+  var keypair = ec.generateKeyPairHex();
+  
+  _pubKey = keypair.ecpubhex;
+  _prvKey = keypair.ecprvhex;
+  _algAss = document.getElementById("algAss").value;
+  _curva = document.getElementById("valorCurva").value;
+  
+  document.getElementById("pubKey").value = _pubKey;
+  	
+  	
+  }
+
+    function assina(){
+    	
+    	var sig = new KJUR.crypto.Signature({"alg": _algAss, "prov": "cryptojs/jsrsa"});
+    	sig.initSign({'ecprvhex': _prvKey, 'eccurvename': _curva});
+    	
+		sig.updateHex(_strHex);
+		var assinatura = sig.sign();
+
+		
+    	document.getElementById("arqAss").value = assinatura;
+    	
+    }
+    
+    
+    
+    function doVerify() {
+  var f1 = document.form1;
+  var pubkey = f1.pubkey1.value;
+  var curve = f1.curve1.value;
+  var sigalg = f1.sigalg1.value;
+  var msg1 = f1.msg1.value;
+  var sigval = f1.sigval1.value;
+
+  var sig = new KJUR.crypto.Signature({"alg": sigalg, "prov": "cryptojs/jsrsa"});
+  sig.initVerifyByPublicKey({'ecpubhex': pubkey, 'eccurvename': curve});
+  sig.updateString(msg1);
+  var result = sig.verify(sigval);
+  if (result) {
+    alert("valid ECDSA signature");
+  } else {
+    alert("invalid ECDSA signature");
+  }
+}
+    
+    function verificaAssinatura() {
+  
+  var assinatura = document.getElementById("arqAss").value;
+  
+  var sig = new KJUR.crypto.Signature({"alg": _algAss, "prov": "cryptojs/jsrsa"});
+  sig.initVerifyByPublicKey({'ecpubhex': _pubKey, 'eccurvename': _curva});
+  sig.updateHex(_strHex);
+  var result = sig.verify(assinatura);
+  console.log(result);
+  console.log(sig);
+  if (result) {
+    alert("valid ECDSA signature");
+  } else {
+    alert("invalid ECDSA signature");
+  }
+}
+    
+ 
+    function ba2hex(Int8Array){
+    	
+    	var tam = Int8Array.length;
+        var saida = "";
+        
+        for(var i=0; i<tam; i++){
+        saida += Int8Array[i].toString(16);
+      }
+    	return saida;
+    }
+ 
+ 
+    function ab2str(buf) {
+       return String.fromCharCode.apply(null, new Int8Array(buf));
+     }
+ 
+    
+function file2ab(file) {
+
+    var reader = new FileReader();     
+    reader.readAsArrayBuffer(file);   
+    reader.onload = function(e) {
+        var buffer = reader.result;           
+        var view = new DataView(buffer);      
+        var magic = view.getUint8(0, false); 
+        var numint = new Int8Array(buffer);
+        
+        return numint;
+
+    };
+}
+
+
+function file2hex(file) {
+          
+    var reader = new FileReader();   
+    reader.readAsArrayBuffer(file);   
+    reader.onload = function(e) {
+        var buffer = reader.result;          
+        var view = new DataView(buffer);      
+        var magic = view.getUint8(0, false); 
+        var numint = new Int8Array(buffer);
+        
+        var tam = numint.length;
+        var saida = "";
+        
+        for(var i=0; i<tam; i++){
+        saida += numint[i].toString(16);
+      }
+      
+      _strHex = saida;
+
+    };
+}
+
+function teste(){
+console.log(1513212313);
+}
+
+</script>
+<style>
+    h4 {color:darkblue}
+    body {
+
+margin:0;
+padding:0;
+background:#ccc;
+text-align:center;
+}
+</style>
+    <body>
+        
+        <h1>ASSINATURA DIGITAL JAVASCRIPT</h1>
+  <div id ="Gerar Chave">
+      <h4>Passo 1: Gerar Chave. </h4>
+      <select id="valorCurva" name="curva">
+<option value="secp256r1">secp256r1 
+<option value="secp384r1">secp384r1 
+</select>
+
+<select id="algAss" name="algoritmoAssinatura">
+<option value="SHA256withECDSA">SHA256
+<option value="SHA1withECDSA">SHA1
+</select>
+      
+      <p>
+    <button id="botaoGeraChaves" onclick="gera()" type="button" >Gerar chaves</button>
+      </p>
+      <p>    
+    <textarea id="pubKey" name="publicKey" rows="10" cols="32">
+    </textarea>
+      </p>
+  </div>
+      <div id="Escolher aquivo">
+          <h4> Passo 2: Escolha o arquivo a ser assinado. </h4>
+      <p>
+	  <input type="file" onchange="file2hex(this.files[0])"/>
+      </p>
+      </div>
+      
+      <div id="Assinar">
+          <h4> Passo 3: Assinar documento. </h4>
+Este passo pode demorar um pouco. Aguarde.
+      <p>
+<button id="botaoAssina" onclick="assina()" type="button" >Assinar</button>
+      </p>
+      <p>
+        <textarea id="arqAss" name="arquivoAssinado" rows="10" cols="32">
+	</textarea>
+      </p>
+      </div>
+      <div id="verificar">
+          <h4> Passo 4: Verificar Assinatura. </h4>
+          Este passo pode demorar um pouco. Aguarde.
+          <p>
+	<button id="botaoVerifica" onclick="verificaAssinatura()" type="button" >Verificar assinatura</button>
+          </p>
+      </div>
+
+
+ 
+  </body>
+</html>
