@@ -1,0 +1,437 @@
+<html><head>
+		<title>Com o PortalWeb você não perde o que acontece na faculdade!</title>
+		<meta property="og:type" content="product">
+		<meta property="og:url" content="http://www.PortalWeb.com/">
+		<meta property="og:site_name" content="PortalWeb">
+		<meta property="fb:app_id" content="192454074134796">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1; minimum-scale=1;">
+		
+
+		<script src="https://apis.google.com/_/scs/apps-static/_/js/k=oz.gapi.pt_BR.E9LlopYORV8.O/m=auth/exm=plusone/rt=j/sv=1/d=1/ed=1/am=EQ/rs=AItRSTOB3iQhJ1tyHYPD0wEXe2wPvz3rdw/cb=gapi.loaded_1" async=""></script>
+                <script src="https://apis.google.com/_/scs/apps-static/_/js/k=oz.gapi.pt_BR.E9LlopYORV8.O/m=plusone/rt=j/sv=1/d=1/ed=1/am=EQ/rs=AItRSTOB3iQhJ1tyHYPD0wEXe2wPvz3rdw/cb=gapi.loaded_0" async=""></script>
+                <script id="twitter-wjs" src="js/widgets.js"></script>
+                <script id="facebook-jssdk" src="//connect.facebook.net/en_US/all.js#xfbml=1&amp;appId="></script>
+                <script type="text/javascript" async="" src="http://www.google-analytics.com/ga.js"></script>
+                <script src="js/jquery-1.7.2.min.js"></script>
+		<script src="js/bootstrap.js"></script>
+		<script src="js/hashchange.min.js"></script>
+		<script src="js/general.js?v=4.2"></script>
+
+        <script type="text/javascript">
+
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-18303830-1']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' === document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+
+        </script>
+
+		<script type="text/javascript">
+
+            // detect user OS
+            var platform = navigator.platform.toUpperCase(),
+                os = 'windows';
+            if ( platform.indexOf('MAC')!==-1 )
+                os = 'mac';
+            else if ( platform.indexOf('WIN')!==-1 )
+                os = 'windows';
+            else if ( platform.indexOf('LINUX')!==-1 )
+                os = 'linux';
+
+			var pageGA = "/mainPage/desktop/windows";
+			var referral = "";
+			var products = [
+                                         'iphone',
+			                 'android',
+			                 'windowsphone'
+			                 
+			                  ];
+			var screenshots = [
+			                    'screenIphoneV5.png',
+			                    'screenAndroidV4.png',
+			                    'WP8-mainV7.png'
+			                   ];
+			function updateCarouselItems(position, doScroll)
+			{
+				if (doScroll)
+					scrollCarouselTo(position);
+				updateCarouselSelector(position);
+				updateCarouselCombo(position);
+			}
+			function updateCarouselCombo(position)
+			{
+				var text = $('#carouselCombo ul li a:eq('+position+')').text();
+				$('#carouselCombo button span.crouselButtonText').text(text);
+			}
+			function updateCarouselSelector(position)
+			{
+				$('#carouselSelectors')
+					.find('.active')
+					.removeClass('active');
+
+				var selector = $('#carouselSelectors a').get(position);
+				$(selector).toggleClass('active');
+			}
+			function scrollCarouselTo(position)
+			{
+				$('#devicesCarousel').carousel(position);
+			}
+
+			function getProdByDir(dir)
+			{
+				var currentPos = $("#devicesCarousel .active").index('#devicesCarousel .item');
+				var maxPos = $("#devicesCarousel .item").length - 1;
+
+				if (dir === "right")
+					pos = currentPos === 0 ? maxPos : currentPos-1;
+				else
+					pos = currentPos === maxPos ? 0 : currentPos+1;
+
+				return pos;
+			}
+			function setProdInHash(prod)
+			{
+				if (getProdFromHash() !== prod)
+					location.hash = products[prod];
+			}
+			function getProdFromHash()
+			{
+				var hash = location.hash;
+
+				var prod = hash.replace( /^#/, '' );
+				if (prod === "")
+					prod = "desktop";
+				var prodPos = 0;
+				for (var i in products)
+				{
+					if (products[i] === prod)
+						prodPos = i;
+				}
+
+				return parseInt(prodPos, 10);
+			}
+			$(function(){
+                $('.button[data-type="'+os+'"]').css('display','inline-block');
+                $('#carouselItem_desktop .carouselItemText a:not(.button), #carouselItem_desktop a.carouselItemTitle').attr('href','./products/'+os+'/');
+
+				$('#carouselItem_desktop .button').click(function(e){
+				    var btnOS = 'Unknown';
+				    if ( $(this).data('type') == 'windows')
+				        btnOS = 'WindowsPC';
+				    else if ( $(this).data('type') == 'mac')
+				        btnOS = 'MacOS';
+				});
+			});
+			
+			function loadFirstDeviceImage()
+			{
+				var position = $("#devicesCarousel .active").index('#devicesCarousel .item');
+				$('#devicesCarousel .item').eq(position).find('.carouselItemImage img').attr('src', 'images/'+screenshots[position]);
+			}
+			
+			function loadDevicesImages()
+			{
+				$('#devicesCarousel .item').each(function()
+				{
+					var pos = $(this).index();
+					if (!$('.carouselItemImage', this).find('img').attr('src'))
+						$('.carouselItemImage', this).find('img').attr('src', 'images/'+screenshots[pos]);
+				});
+			}
+			
+			window.onload = function()
+			{
+				loadFirstDeviceImage();
+				loadDevicesImages();
+									(function(d, s, id)
+					{
+						var js, fjs = d.getElementsByTagName(s)[0];
+						if (d.getElementById(id)) return;
+						js = d.createElement(s); js.id = id;
+						js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=";
+						fjs.parentNode.insertBefore(js, fjs);
+					}(document, 'script', 'facebook-jssdk'));
+
+					!function(d,s,id)
+					{
+						var js,fjs=d.getElementsByTagName(s)[0];
+						if(!d.getElementById(id))
+						{
+							js=d.createElement(s);
+							js.id=id;
+							js.src="//platform.twitter.com/widgets.js";
+							fjs.parentNode.insertBefore(js,fjs);
+						}
+					}(document,"script","twitter-wjs");
+
+					(function()
+					{
+						var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+						po.src = 'https://apis.google.com/js/plusone.js';
+						var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+					})();
+							}
+		</script>
+
+		<link rel="stylesheet" href="//www.cdn.viber.com/styles/bootstrap.css">
+		<link rel="stylesheet" href="//www.cdn.viber.com/styles/main.css?v=4.2">
+
+
+	</head>
+	<body>
+		<div class="mainPageBG"></div>
+
+		<div class="navbar">
+			<div class="navbar-inner">
+				<div class="container">
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+			<div class="mainContent">
+				<div class="row-fluid">
+					<div class="mainTitle">Com o PortalWeb você não perde o que acontece na faculdade!</div>
+				</div>
+				<div class="row-fluid">
+					<div id="carouselSelectors" data-toggle="selectors-radio">
+               
+						<a href="javascript:void(0)" style="background-position:-180px 0" class="active">iOS</a>
+						<a href="javascript:void(0)" style="background-position:-270px 0" class="">Android</a>
+						<a href="javascript:void(0)" style="background-position:-360px 0" class="">Windows Phone</a>
+					</div>
+					<div id="carouselCombo">
+						<div class="btn-group">
+							<button class="btn dropdown-toggle" data-toggle="dropdown"><span class="crouselButtonText"></span><span class="caret"></span></button>
+							<ul class="dropdown-menu">
+								
+								<li><a href="javascript:void(0)">iOS</a></li>
+								<li><a href="javascript:void(0)">Android</a></li>
+								<li><a href="javascript:void(0)">Windows Phone</a></li>
+
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="mainDiv">
+					<div class="row-fluid">
+						<div id="devicesCarousel" class="carousel slide" style="position:relative;">
+							
+							<div class="carousel-inner">
+							    <div class="item active" id="carouselItem_iphone">
+                                    <table cellpadding="0" cellspacing="0" border="0" class="carouselItemTable">
+                                        <tbody><tr>
+                                            <td class="carouselItemDesc">
+                                                <a href="./products/iphone/" class="carouselItemTitle">PortalWeb para iOS</a>
+                                                <div class="carouselItemText">
+                                                   Com o PortalWeb para iOS você não perde o que acontece na faculdade, seja você da parte administrativa, seja você estudante.
+                                                    <div class="readmore">
+                                                        <a href="./products/iphone/"></a>
+                                                        <a class="button mac green" href="" data-type="mac">
+                                                            <img src="images/blank.gif">
+                                                            <div class="with_note">Baixe PortalWeb<div class="note">OS 10.7 &amp; up</div></div>
+                                                        <i class="green-btn-icon"></i></a>
+                                                        <a class="button iphone green" href="https://itunes.apple.com/br/genre/ios/id36?mt=8" data-type="iphone" style="display: inline-block;"><img src="images/blank.gif">Baixe PortalWeb<i class="green-btn-icon"></i></a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="carouselItemImage">
+                                                <div>
+                                                    <img alt="" src="images/screenIphoneV5.png">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody></table>
+                                                            </div>
+								<div class="item" id="carouselItem_android">
+									<table cellpadding="0" cellspacing="0" border="0" class="carouselItemTable">
+										<tbody><tr>
+											<td class="carouselItemDesc">
+												<a href="./products/android/" class="carouselItemTitle">PortalWeb para Android</a>
+												<div class="carouselItemText">
+													Com o PortalWeb para Android você não perde o que acontece na faculdade, seja você da parte administrativa, seja você estudante.
+													<div class="readmore">
+													    <a href="./products/android/"></a>
+													    <a class="button android green" href="https://play.google.com/store" data-type="android"><img src="images/blank.gif">Baixe PortalWeb<i class="green-btn-icon"></i></a>
+													</div>
+												</div>
+											</td>
+											<td class="carouselItemImage">
+												<div>
+													<img alt="" src="images/screenAndroidV4.png">
+												</div>
+											</td>
+										</tr>
+									</tbody></table>
+								</div>
+								<div class="item" id="carouselItem_windowsphone">
+									<table cellpadding="0" cellspacing="0" border="0" class="carouselItemTable">
+										<tbody><tr>
+											<td class="carouselItemDesc">
+												<a href="./products/windowsphone8/" class="carouselItemTitle">PortalWeb para Windows Phone</a>
+												<div class="carouselItemText">
+													Com o PortalWeb para Windows Phone você não perde o que acontece na faculdade, seja você da parte administrativa, seja você estudante.
+													<div class="readmore">
+													    <a href="./products/windowsphone8/"></a>
+        												<a class="button winphone green" href= "http://www.windowsphone.com/pt-br/store" target=_blank data-type="windows phone 8"><img src="images/blank.gif">Baixe PortalWeb<i class="green-btn-icon"></i></a>
+													</div>
+												</div>
+											</td>
+											<td class="carouselItemImage">
+												<div>
+													<img alt="" src="images/WP8-mainV7.png">
+												</div>
+											</td>
+										</tr>
+									</tbody></table>
+								</div>
+				
+							</div>
+							<a class="left carousel-control" href="#devicesCarousel" data-slide="prev">‹</a>
+							<a class="right carousel-control" href="#devicesCarousel" data-slide="next">›</a>
+						</div>
+					</div>
+					<script type="text/javascript">
+						window.scrollTo(0, 1);
+						if (location.hash != "")
+							document.getElementById("carouselItem_"+products[getProdFromHash()]).className += " active";
+						else if (document.getElementById("carouselItem_desktop"))
+							document.getElementById("carouselItem_desktop").className += " active";
+                        else
+					        document.getElementById("carouselItem_desktop").className += " active";
+						
+						var position = $("#devicesCarousel .active").index('#devicesCarousel .item');
+						updateCarouselItems(position);
+					</script>
+					<div id="bottomSection" class="row-fluid">
+						<div class="bullets">
+							<div class="title">Porque PortalWeb?</div>
+							<ul>
+								<li>Notificações</li>
+								<li>Notas e faltas</li>
+								<li>Material didático</li>
+								<li>Trabalhos</li>
+                                                                <li>Horários</li>
+                                                        </ul>
+						</div>
+						<div class="connect">
+							<div class="title">Conecte com PortalWeb</div>
+							<div class="connectPair">
+								<div class="facebook icon"><a href="http://www.facebook.com/PortalWeb" target="_blank"><span>Join us on facebook</span></a></div>
+								<div class="twitter icon"><a href="http://www.twitter.com/PortalWeb" target="_blank"><span>Follow us on twitter</span></a></div>
+							</div>
+							<div class="connectPair">
+								<div class="circle icon"><a href="https://plus.google.com/PortalWeb" target="_blank"><span>Add us to a circle</span></a></div>
+								<div class="rss icon"><a href="./rss.php" target="_blank"><span>Subscribe</span></a></div>
+							</div>
+						</div>
+							<div class="share">
+                                                            <div class="shareItem facebook"><div class="fb-like" data-href="https://www.facebook.com/PortalWeb" data-send="false" data-layout="button_count" data-width="90" data-height="21" data-show-faces="true"></div></div>
+                                                                
+                                                        </div>
+						<div class="footer">
+							
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="fb-root"></div>
+		<script type="text/javascript">
+			!function ($)
+			{
+				$(function()
+				{
+					$(document).bind("mouseup", function()
+						{
+							$('#devicesCarousel').find('.btn.active').removeClass('active');
+							$('.connectPair').find('.icon.active').removeClass('active');
+						})
+					$('#devicesCarousel').find('.btn').removeClass('active');
+					$('#devicesCarousel').find('.btn').bind("dragend", function()
+						{
+							$(this).removeClass('active');
+						})
+					$('#devicesCarousel').find('.btn').bind("mousedown", function()
+						{
+							$(this).addClass('active');
+						})
+					$('.connectPair').find('.icon').bind("dragend", function()
+						{
+							$(this).removeClass('active');
+						})
+					$('.connectPair').find('.icon').bind("mousedown", function()
+						{
+							$(this).addClass('active');
+						})
+
+					$('#devicesCarousel').carousel({interval: false, pause: ''});
+
+					$("#devicesCarousel").bind("slid", function()
+						{
+							updateCarouselItems( $("#devicesCarousel .active").index('#devicesCarousel .item') );
+						})
+
+					$("#devicesCarousel").bind("swipe", function(e, dir)
+						{
+							setProdInHash( getProdByDir(dir) );
+						})
+					$('.carousel-control').each(function(i)
+						{
+							$(this).click(function()
+							{
+								if ($(this).hasClass("left"))
+									dir = "right";
+								else
+									dir = "left";
+
+								setProdInHash( getProdByDir(dir) );
+							})
+						})
+					$('#carouselCombo ul li').find('a').each(function(i)
+						{
+							$(this).click(function()
+							{
+								setProdInHash( $('#carouselCombo ul li a').index($(this)) );
+							})
+						})
+					$('#carouselSelectors').find('a').each(function(i)
+						{
+							$(this).click(function()
+							{
+								setProdInHash( $('#carouselSelectors a').index($(this)) );
+							})
+						})
+
+					//Bind an event to window.onhashchange that, when the hash changes, updates the carousel
+					$(window).hashchange( function()
+						{
+							updateCarouselItems(getProdFromHash(), true);
+						})
+
+					//Since the event is only triggered when the hash changes, we need to trigger
+					//the event now, to handle the hash the page may have loaded with.
+					$(window).hashchange();
+
+				})
+			}(window.jQuery);
+			window.onpageshow = function()
+			{
+				$('#devicesCarousel').find('.btn').each(function()
+					{
+						$(this).html($(this).html());
+					});
+			}
+
+		</script>
+		<img src="images/wgimage.gif?evt=1" width="0" height="0" alt="" style="visibility:hidden">	
+
+<iframe name="oauth2relay699308807" id="oauth2relay699308807" src="https://accounts.google.com/o/oauth2/postmessageRelay?parent=http%3A%2F%2Fwww.viber.com#rpctoken=264667238&amp;forcesecure=1" tabindex="-1" style="width: 1px; height: 1px; position: absolute; top: -100px;"></iframe></body></html>
